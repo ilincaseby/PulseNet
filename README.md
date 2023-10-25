@@ -1,11 +1,6 @@
 # README PCOM SERVER-CLIENT TCP
 ## Ilinca Sebastian-Ionut 321CA
 
-## Difficulties encountered
-* One of the hardest things to debug was the fact that after a client connects to a server, it needs to tell his id. The server will then accept or decline the connection by sending him a structure or 0 bytes (when 0 bytes are sent on a socket in a TCP protocol, the connection is closed). By doing this *ping-pong* of informations before sensing and receiving actual data, the revent on the socket of the client was set on POLLIN and in the for loop of the server, it detects it and wait for a command from the new client before it can do anything(I do not know why this thing happened only when the clients connected and then disconnected).
-* Another thing that bugged me was not testing with checker by also giving it the permission to modify the TCP buffer from kernel with *'sudo'*.
-* By checking the length of the command from stdin on the server to be *4*, it could not detect the message from the checker to exit, it was *6* from a reason or another.
-
 ## Implementation logic for the client
 * As it starts, the client checks for any input errors that can come by not respecting the length of the id or by giving it a wrong port/ip. It also disable the buffering by giving the command *setvbuf(stdout, NULL, _IONBF, BUFSIZ)*.
 * After disabling the Nagle's algorithm and initiating **struct sockaddr_in**, it connects to the server and sends it's id. If the server send back 0 bytes, the client closes the socket and exit the program. **But** if the id is unique or is it found by the server inside a special struct that retains old clients with their notifications *on hold*, the client will call a function which creates an array of *pollfd* and wait in a while-loop for events coming from the server or the file descriptor representing *stdin*.
@@ -47,8 +42,3 @@
     * Is this a non-const reference? If so, make const or use a pointer
     * Do not use namespace using-directives
 * I ignored errors above because of the ease that code is written with *using namespace std* and smart pointers (**&**). I tried using strtok_r but was a little overhead needing to make a pointer to the static allocated buffer and then parse its address decreasing the lizibility of the code. As about thread-safe for future implementation, making the buffer be a copy of the command, I think it will work just fine if the threads are started before initiating the buffer.
-
-## Feedback
-* As good as it can be this project for learning new things and encounter difficulties, I think the checker should test more extreme cases, even if the points are accorded after manually testing because the person according the credits may encounter a bug that no checker and no test manually tested by myself could discover, it happens (hope I won't get less credit if it is a bug there :))) ).
-* It's not the hardest, nor the easiest project, it's somewhere in the middle, but with a semester like this, it's pretty good :)) .
-* **If something is unclear, although I tried my best with comments in the code and in this README, please contact me at the following gmail address: ilincasebastian1406@gmail.com**
