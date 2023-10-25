@@ -1,4 +1,4 @@
-# README PCOM SERVER-CLIENT TCP
+# README PulseNet
 ## Ilinca Sebastian-Ionut 321CA
 
 ## Implementation logic for the client
@@ -33,7 +33,6 @@
     * udp_receive.cpp
 * make:
     * Makefile (**the run is made manually, make just build the executable files**)
-* **All needed files will be in the archive, including the checker and udp_client**
 
 ## Coding style checker
 * After many failed attempts to be able to use a checker, I found **cpplint**. So, as a consequence, the coding style errors are resolved with *cpplint*.
